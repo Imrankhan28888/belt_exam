@@ -21,8 +21,7 @@ def register(request):
     else:
         new_user = User.objects.register(request.POST)
         request.session['user_id'] = new_user.id
-        messages.success(request, "You have successfully registered!")
-        return redirect('/success')
+        return redirect('/thoughts')
 
 
 def login(request):
@@ -33,18 +32,79 @@ def login(request):
         return redirect('/')
     user = User.objects.get(email=request.POST['email'])
     request.session['user_id'] = user.id
-    messages.success(request, "You have successfully logged in!")
-    return redirect('/success')
+    return redirect('/thoughts')
 
 def logout(request):
     request.session.clear()
     return redirect('/')
 
-def success(request):
+def thoughts(request):
     if 'user_id' not in request.session:
         return redirect('/')
     user = User.objects.get(id=request.session['user_id'])
     context = {
-        'user': user
+        'user': user,
+        'all_thoughts': Thought.objects.all(),
     }
-    return render(request, 'success.html', context)
+    return render(request, 'thoughts.html', context)
+
+def post_thought(request):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        errors = Thought.objects.validator(request.POST)
+        if len(errors):
+            for key, value in errors.items():
+                messages.error(request, value)
+            return redirect('/thoughts')
+        
+        if request.method == "POST":
+            Thought.objects.create(
+                message=request.POST['message'],
+                user_uploaded = User.objects.get(id=request.session['user_id'])
+            )
+    
+    return redirect('/thoughts')
+
+def show_thought(request, id):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    user = User.objects.get(id=request.session['user_id'])
+    thought = Thought.objects.get(id=id)
+    
+    context = {
+        'user': user,
+        'thought': thought,
+    }
+
+    return render(request, 'show.html', context)
+
+def delete_thought(request, id):
+    if 'user_id' not in request.session:
+        return redirect('/')
+    if request.method == "POST":
+        delete_thought = Thought.objects.get(id=id)
+        print("session user id: " + str(request.session['user_id']))
+        print("Message user id: " + str(delete_thought.user_uploaded.id))
+        if ((request.session['user_id']) == delete_thought.user_uploaded.id):
+            delete_thought.delete()
+    
+    return redirect('/thoughts')
+
+
+def favorite(request, thought_id):
+    if request.method == "POST":
+        user = User.objects.get(id=request.session["user_id"])
+        thought = Thought.objects.get(id=thought_id)
+        user.users_liked_thoughts.add(thought)
+
+    return redirect('/thoughts')
+
+def unfavorite(request, thought_id):
+    if request.method == "POST":
+        user = User.objects.get(id=request.session["user_id"])
+        thought = Thought.objects.get(id=thought_id)
+        user.users_liked_thoughts.remove(thought)
+
+    return redirect('/thoughts')   
+

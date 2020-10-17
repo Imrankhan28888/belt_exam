@@ -25,10 +25,14 @@ class UserManager(models.Manager):
         return errors
 
     def authenticate(self, email, password):
+        errors = {}
+        if not EMAIL_REGEX.match(email):
+            return False
+        if len(password) < 1:
+            return False
         users = self.filter(email=email)
         if not users:
             return False
-
         user = users[0]
         return bcrypt.checkpw(password.encode(), user.password.encode())
 
@@ -42,6 +46,13 @@ class UserManager(models.Manager):
         )
   
 
+class ThoughtManager(models.Manager):
+    def validator(self,postData):
+        errors = {}
+        if len(postData['message']) < 5:
+            errors['message'] = "Thought must be at least 5 characters"
+        return errors
+
 
 class User(models.Model):
     first_name = models.CharField(max_length=45)
@@ -52,3 +63,13 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
+
+
+class Thought(models.Model):
+    message = models.CharField(max_length=255)
+    user_uploaded = models.ForeignKey(User, related_name="user_uploaded_thoughts",on_delete=models.CASCADE)
+    users_likes = models.ManyToManyField(User, related_name='users_liked_thoughts')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    objects = ThoughtManager()

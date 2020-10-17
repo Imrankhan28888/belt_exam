@@ -1,5 +1,5 @@
 body {
-    background-color:black;
+    background-color: goldenrod;
 }
 
 h1,h2,h3,h4,h5,p,label {
@@ -7,9 +7,9 @@ h1,h2,h3,h4,h5,p,label {
 }
 
 nav {
-    background-color:gray;
+    background-color:lightslategray;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-bottom: 1em;
     padding: 1em;
 }
@@ -19,6 +19,7 @@ nav > h1 {
 nav > a {
     font-size: 2rem;
     text-shadow: 2px 2px 2px white;
+    color: yellow;
 
 }
 
@@ -28,20 +29,12 @@ nav > a {
     border-color: #007bff;
 }
 
-a {
-    color: yellow;
-    font-weight: bold;
-    
-}
 
-/* form {
-    margin: 0 40px;
-} */
 
 #reg {
 
   width: 300px;
-  margin-left: 25%;
+  margin-left: 15%;
   display: inline-block;
   vertical-align: top;
   
@@ -51,7 +44,7 @@ a {
 #login {
 
     width: 300px;
-    margin-left: 25%;
+    margin-left: 35%;
     display: inline-block;
    
    
@@ -64,16 +57,99 @@ color: red;
 
 }
 
-#success
-{
-text-align: center;
-color: green;
-
-}
 
 li {
 list-style: none;
 }
 
+#post {
+padding: 20px;
+margin-left: 30%;
+margin-right: 30%;
+}
 
 
+#posts {
+    background-color: goldenrod;
+    margin-left: 20%;
+    margin-right: 20%;
+    
+}
+
+
+.one_post {
+    background-color: teal;
+    padding: 25px;
+    margin: 25px;
+    min-height: 100px;
+    border-radius: 20px;
+    font-style: italic;
+    
+}
+
+.one_post a {
+    text-shadow: 2px 2px 2px black;
+    margin-left: 85%;
+    font-size: large;
+    color: yellow;
+    font-weight: bold;
+}
+
+.post{
+    font-size: auto;
+    text-align: center;
+
+}
+
+
+
+#likes a {
+
+    text-shadow: 2px 2px 2px black;
+    margin-left: 38%;
+    font-size: x-large;
+    color: yellow;
+    font-weight: bold;
+}  
+
+
+#message p {
+
+    font-size: xx-large;
+    color: goldenrod;
+
+}
+
+#showup {
+
+    background-color: purple;
+    padding: 10%;
+    margin-bottom: 1%;
+    border-radius: 20px;
+    
+}
+
+
+#top
+{
+    background-color: black;
+    border-radius: 20px;
+    color: yellow;
+    font-weight: 500;
+    padding: 20px;
+    margin-left: 20%;
+    
+
+}
+
+#showbottom {
+
+    background-color: black;
+    padding: 2%;
+    margin-bottom: 1%;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-left: 12%;
+    
+
+}

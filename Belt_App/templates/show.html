@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Book</title>
+    <!-- Attaching Boot Strap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Attaching CSS files -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}"> 
+    <!-- Attaching JS files  -->
+    <!-- <script src="{% static 'js/script.js' %}"></script>  -->
+</head>
+   <body>
+        <nav>
+            <a href="/thoughts">Dashboard</a>
+            <a href="/logout">Log Out</a>
+        </nav>
+        
+        <div class="container">
+            <div class="row">
+
+                <div class="col-6 px-8" id="top">
+                    {{user.first_name}} says:
+                    <div id="showup" >
+                        <h5 class='post'>{{thought.message}}</h5>
+                    </div>
+                    {% if user in thought.users_likes.all %}
+
+                    <form action="/unfavorite/{{thought.id}}" method=POST>
+                        {% csrf_token %}
+                        <input type="submit"  class="btn btn-danger" value='Unlike'>
+                    </form> 
+                   
+                    {% else %}
+                    <form action="/favorite/{{thought.id}}" method=POST>
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-sm btn-success" value='Like'>
+                    </form>                     
+                    {% endif %}
+                </div>
+
+
+                <div class="col-8 px-12" id="showbottom">
+                        <h3>People who liked this thought:</h3>
+                        <div class="container">
+                                <table class="table table-bordered table-dark">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for fav_user in thought.users_likes.all %}
+                                    <tr>
+                                        <td>{{ fav_user.first_name }}</td>
+                                        <td>{{ fav_user.last_name }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+       
+   </body>
+</html>

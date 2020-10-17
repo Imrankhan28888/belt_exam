@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Registration</title>
+    <!-- Attaching Boot Strap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Attaching CSS files -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}"> 
+    <!-- Attaching JS files  -->
+    <!-- <script src="{% static 'js/script.js' %}"></script>  -->
+</head>
+   <body>
+        <nav>
+            <!-- <h2>Thoughts</h2> -->
+            <h3>Hi, {{ user.first_name }} {{ user.last_name }}!</h3>
+            <a href="/logout">Log Out</a>
+        </nav>
+            
+        <div id="errors">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+            
+        <div id="post">
+            <form action="/post_thought" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="message">Add a Thought</label>
+                    <textarea name="message" id="message" cols="30" rows="5" class="form-control"></textarea>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-sm btn-primary">Add Thought!</button>
+                </div>
+            </form>
+        </div>
+
+        
+        <div id='posts'>
+            {% for info in all_thoughts %}
+            <div class='one_post'>
+                <a href="/thought/{{info.id}}">Details</a>
+                <p class='post'>{{info.user_uploaded.first_name}} says: </p>
+                <div id="message">
+                    <p class='post'>{{info.message}}</p>
+                    
+                </div>
+                <div id="likes">
+                    <p>{{ info.users_likes.count }} person(s) like this</p>
+                </div>
+                <form action="/delete/{{info.id}}" method=POST>
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-sm btn-danger" value='Delete Message'>
+                </form>
+    
+            </div>
+            {% endfor %}
+        </div> 
+
+
+    
+    
+   </body>
+</html>
