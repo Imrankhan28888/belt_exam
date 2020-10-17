@@ -1,0 +1,79 @@
+body {
+    background-color:black;
+}
+
+h1,h2,h3,h4,h5,p,label {
+    color: blanchedalmond;
+}
+
+nav {
+    background-color:gray;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+nav > h1 {
+    text-shadow: 2px 2px 2px black;
+}
+nav > a {
+    font-size: 2rem;
+    text-shadow: 2px 2px 2px white;
+
+}
+
+.btn-primary {
+    color: #394a67;
+    background-color: #00ffb4;
+    border-color: #007bff;
+}
+
+a {
+    color: yellow;
+    font-weight: bold;
+    
+}
+
+/* form {
+    margin: 0 40px;
+} */
+
+#reg {
+
+  width: 300px;
+  margin-left: 25%;
+  display: inline-block;
+  vertical-align: top;
+  
+
+}
+
+#login {
+
+    width: 300px;
+    margin-left: 25%;
+    display: inline-block;
+   
+   
+}
+
+#errors
+{
+text-align: center;
+color: red;
+
+}
+
+#success
+{
+text-align: center;
+color: green;
+
+}
+
+li {
+list-style: none;
+}
+
+
+
