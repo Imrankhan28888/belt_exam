@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from time import gmtime, strftime
 from .models import *
 from django.contrib import messages
+from django.db.models import Count
 
 def index(request):
     context = {
@@ -38,13 +39,17 @@ def logout(request):
     request.session.clear()
     return redirect('/')
 
+
+
+
 def thoughts(request):
     if 'user_id' not in request.session:
         return redirect('/')
     user = User.objects.get(id=request.session['user_id'])
     context = {
         'user': user,
-        'all_thoughts': Thought.objects.all(),
+        'all_thoughts':Thought.objects.annotate(likes=Count("users_likes")).order_by("-likes") 
+              
     }
     return render(request, 'thoughts.html', context)
 
@@ -97,14 +102,23 @@ def favorite(request, thought_id):
         user = User.objects.get(id=request.session["user_id"])
         thought = Thought.objects.get(id=thought_id)
         user.users_liked_thoughts.add(thought)
+        context = {
+            'user': user,
+            'thought': thought,
+        }
 
-    return redirect('/thoughts')
+    return render(request, 'show.html', context)
+
+
 
 def unfavorite(request, thought_id):
     if request.method == "POST":
         user = User.objects.get(id=request.session["user_id"])
         thought = Thought.objects.get(id=thought_id)
         user.users_liked_thoughts.remove(thought)
+        context = {
+            'user': user,
+            'thought': thought,
+        }
 
-    return redirect('/thoughts')   
-
+    return render(request, 'show.html', context)

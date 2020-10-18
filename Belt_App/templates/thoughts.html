@@ -56,10 +56,16 @@
                 <div id="likes">
                     <p>{{ info.users_likes.count }} person(s) like this</p>
                 </div>
+
+                
+                {% if user.id == info.user_uploaded.id %}
                 <form action="/delete/{{info.id}}" method=POST>
                     {% csrf_token %}
                     <input type="submit" class="btn btn-sm btn-danger" value='Delete Message'>
                 </form>
+                {% endif %}
+               
+                
     
             </div>
             {% endfor %}

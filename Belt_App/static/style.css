@@ -1,5 +1,5 @@
 body {
-    background-color: goldenrod;
+    background-color: darkgoldenrod;
 }
 
 h1,h2,h3,h4,h5,p,label {
@@ -7,7 +7,7 @@ h1,h2,h3,h4,h5,p,label {
 }
 
 nav {
-    background-color:lightslategray;
+    background-color:black;
     display: flex;
     justify-content: space-between;
     margin-bottom: 1em;
@@ -70,7 +70,7 @@ margin-right: 30%;
 
 
 #posts {
-    background-color: goldenrod;
+    background-color: darkgoldenrod;
     margin-left: 20%;
     margin-right: 20%;
     
